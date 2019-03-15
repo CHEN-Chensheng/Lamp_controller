@@ -1,0 +1,10 @@
+<launch>
+    <node name="controller_spawner_5" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port=dnxl_ttl_port
+                --type=simple
+                ax12_controller_5"
+          output="screen">
+    </node>
+
+</launch>

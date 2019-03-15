@@ -1,0 +1,8 @@
+prefix=/home/chenshengchen/New_lamp_control/rdl_ws/install
+
+Name: dynamixel_msgs
+Description: Description of dynamixel_msgs
+Version: 0.4.1
+Cflags: -I/home/chenshengchen/New_lamp_control/rdl_ws/install/include
+Libs: -L/home/chenshengchen/New_lamp_control/rdl_ws/install/lib 
+Requires: message_runtime std_msgs

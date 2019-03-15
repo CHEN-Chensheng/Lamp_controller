@@ -1,0 +1,731 @@
+#include "ros/ros.h"
+#include "rosbag/bag.h"
+#include "rosbag/view.h"
+#include "ros/callback_queue.h"
+#include "std_msgs/Float64.h"
+#include "std_msgs/String.h"
+#include "rdl/jangs.h"
+#include <boost/foreach.hpp>
+
+#include <cstdlib>
+#include <iostream>
+#include <signal.h>
+#include <sstream>
+#include <string.h>
+#include "dynamixel_controllers/SetSpeed.h"
+#include "dynamixel_controllers/TorqueEnable.h"
+#include "dynamixel_controllers/SetComplianceMargin.h"
+#include "dynamixel_controllers/SetComplianceSlope.h"
+#include "dynamixel_msgs/JointState.h"
+#include "book_tracker/book_pos.h"
+
+//Math for ik_pos
+#include "math.h"
+
+//Includes for fk_pos and Jacobian
+#include <kdl/chain.hpp>
+#include <kdl/chainfksolver.hpp>
+#include <kdl/chainfksolverpos_recursive.hpp>
+#include <kdl/chainjnttojacsolver.hpp>
+#include <kdl/frames.hpp>
+#include <kdl/frames_io.hpp>
+#include <stdio.h>
+#include <newmat/newmatio.h>
+
+//Regular Expressions
+#include <regex.h>
+
+using namespace std;
+using namespace KDL;
+using namespace NEWMAT;
+
+#define PI 3.14159265
+
+//Fixed parameters of lamp mechanics
+double d1=0.0884; //[m]
+double d2=0.173; //[m]
+double l1=0.268; //[m]
+double l2=0.211; //[m]
+
+bool ok = true; // Signal handler
+
+class SkypeInterface {
+  private:
+  ros::Subscriber subscribe_skype;
+
+  int Match(const char * string, const char * pattern)
+  {
+        int result;
+        regex_t reg;
+        if (regcomp(&reg, pattern, REG_EXTENDED | REG_NOSUB) != 0) return -1;
+        result = regexec(&reg, string, 0, 0, 0);
+        regfree(&reg);
+        return result;
+  }
+
+  void ReceiveMsg(const std_msgs::String::ConstPtr& msg) {
+	if(!Match(msg->data.c_str(), "^CHAT #")) {
+		ROS_INFO("I received a Chat Message!!!");
+		init_mov[0] = true;
+	}
+
+	if(!Match(msg->data.c_str(), "^CALL.+REFUSED$")) {
+		ROS_INFO("My call was refused!");
+		init_mov[1] = true;
+	}
+  }
+
+  public:
+  //Initiate Movements
+  bool init_mov[2];
+
+  void Init(ros::NodeHandle * n, SkypeInterface * obj) {
+  	subscribe_skype = n->subscribe("/skype_interface/msg", 100, &SkypeInterface::ReceiveMsg, obj);
+	init_mov[0] = false;
+	init_mov[1] = false;
+  }
+};
+
+class BookPosition {
+  ros::Subscriber subscribe_bookpos;
+
+  public:
+  double x, y;
+
+  void Init(ros::NodeHandle * n, BookPosition * obj) {
+	x = 320;
+	y = 240;
+
+  	subscribe_bookpos = n->subscribe("/book_tracker/book_pos", 100, &BookPosition::UpdatePos, obj);
+  }
+
+  void UpdatePos(const book_tracker::book_pos::ConstPtr& msg) {
+  	x = msg->x;
+  	y = msg->y;
+  }
+};
+
+class ServoControl {
+  //klären wann serial-bus einen overflow kriegt
+  //klären was passiert, wenn advertiser und serviceClients nicht initialisiert werden können
+
+  ros::Publisher set_angle[5];
+  ros::ServiceClient set_speed[5];
+  ros::ServiceClient torque_enable[5];
+  //ros::ServiceClient compliance_margin[5];
+  //ros::ServiceClient compliance_slope[5];
+  ros::Subscriber subscribe_servostate[5];
+
+  //Offset angles for joints
+  double offset[5];
+
+  /*
+  double old_angles[5];
+  double old_velocities[5];
+  */
+  
+  public:
+    double current_pos[5];
+    int temperature[5];
+
+    void Init(ros::NodeHandle * n, ServoControl * obj) {
+      for(int i=0; i<5; i++){
+	//Init variables
+	current_pos[i] = 0;
+	temperature[i] = 0;
+	offset[i] = 0;
+
+        std::stringstream ss;
+        std::string controller_topic;
+
+	ss << "/ax12_controller_" << i+1 << "/command";
+        controller_topic = ss.str();
+        set_angle[i] = n->advertise<std_msgs::Float64>(controller_topic, 1000);
+
+	ss.str("");	
+	ss << "/ax12_controller_" << i+1 << "/set_speed";
+        controller_topic = ss.str();
+        set_speed[i] = n->serviceClient<dynamixel_controllers::SetSpeed>(controller_topic);
+
+	ss.str("");	
+	ss << "/ax12_controller_" << i+1 << "/torque_enable";
+        controller_topic = ss.str();
+        torque_enable[i] = n->serviceClient<dynamixel_controllers::TorqueEnable>(controller_topic);
+
+	/*
+	ss.str("");	
+	ss << "/ax12_controller_" << i+1 << "/set_compliance_margin";
+        controller_topic = ss.str();
+        compliance_margin[i] = n->serviceClient<dynamixel_controllers::SetComplianceMargin>(controller_topic);
+
+	ss.str("");	
+	ss << "/ax12_controller_" << i+1 << "/set_compliance_slope";
+        controller_topic = ss.str();
+        compliance_slope[i] = n->serviceClient<dynamixel_controllers::SetComplianceSlope>(controller_topic);
+	*/
+      }
+
+      //Set offset angles:
+      //offset[1] = -3*PI/180;
+      //offset[2] = -2*PI/180;
+
+      subscribe_servostate[0] = n->subscribe("/ax12_controller_1/state", 1000, &ServoControl::UpdateState1, obj);
+      subscribe_servostate[1] = n->subscribe("/ax12_controller_2/state", 1000, &ServoControl::UpdateState2, obj);
+      subscribe_servostate[2] = n->subscribe("/ax12_controller_3/state", 1000, &ServoControl::UpdateState3, obj);
+      subscribe_servostate[3] = n->subscribe("/ax12_controller_4/state", 1000, &ServoControl::UpdateState4, obj);
+      subscribe_servostate[4] = n->subscribe("/ax12_controller_5/state", 1000, &ServoControl::UpdateState5, obj);
+
+      //for(int i=0; i<5; i++) { old_angles[i] = 15; old_velocities[i] = 15;}
+    }
+
+    void SetPos (double angles[]) {
+      //Nur publishen, was sich ändert!
+      
+      // Offset und Drehrichtungsinvertierung
+      angles[0] = angles[0] + offset[0]; //Passiert nix
+      angles[1] = angles[1] + offset[1]; //Offset
+      angles[2] = angles[2] + offset[2]; //Offset
+      angles[3] = - (angles[3] + offset[3]); // 4. Joint dreht entgegen Definition in write up
+      angles[4] = - (angles[4] + offset[4]); // 5. Joint dreht entgegen Definition in write up
+
+      // Implement Joint limits
+      if(angles[0]<-150*PI/180) { angles[0]=-150*PI/180; }
+      if(angles[0]>150*PI/180) { angles[0]=150*PI/180; }
+
+      if(angles[1]<-55*PI/180) { angles[1]=-30*PI/180; }
+      if(angles[1]>55*PI/180) { angles[1]=30*PI/180; }
+
+      if(angles[2]<-80*PI/180) { angles[2]=-80*PI/180; }
+      if(angles[2]>80*PI/180) { angles[2]=80*PI/180; }
+
+      if(angles[3]<-90*PI/180) { angles[3]=-90*PI/180; }
+      if(angles[3]>90*PI/180) { angles[3]=90*PI/180; }
+
+      if(angles[4]<-130*PI/180) { angles[4]=-130*PI/180; }
+      if(angles[4]>130*PI/180) { angles[4]=130*PI/180; }
+
+      std_msgs::Float64 msg;
+      
+      for(int i=0; i<5; i++){
+	// Set the five angles
+	//if(angles[i]!=old_angles[i]) {
+          msg.data = angles[i];
+          set_angle[i].publish(msg);
+	//}
+	//old_angles[i] = angles[i];
+
+      }
+    }
+
+    void SetVel (double velocities[]) {
+      dynamixel_controllers::SetSpeed srv;
+      for(int i=0; i<5; i++) {
+        srv.request.speed = velocities[i];
+        set_speed[i].call(srv);
+      }
+    }
+
+    void TorqueEnable (bool torquesonoff[]) {
+      dynamixel_controllers::TorqueEnable srv;
+      for(int i=0; i<5; i++) {
+        srv.request.torque_enable = torquesonoff[i];
+        torque_enable[i].call(srv);
+      }
+    }
+
+    /*
+    void ComplianceMargin (int margin) {
+      dynamixel_controllers::SetComplianceMargin srv;
+      for(int i=0; i<5; i++) {
+        srv.request.margin = margin;
+        if(compliance_margin[i].call(srv) ) {
+       		ROS_INFO("Success!");
+        }
+	else
+	{
+	        ROS_ERROR("Failed to set ComplianceMargin to %i", margin);
+	}
+      }
+    }
+
+    void ComplianceSlope (int slope) {
+      dynamixel_controllers::SetComplianceSlope srv;
+      for(int i=0; i<5; i++) {
+        srv.request.slope = slope;
+        if(compliance_slope[i].call(srv) ) {
+       		ROS_INFO("Success!");
+        }
+	else
+	{
+	        ROS_ERROR("Failed to set ComplianceMargin to %i", slope);
+	}
+      }
+    }
+    */
+
+    //Angles in current_pos incorporate the offset and are defined according to the write up
+    void UpdateState1(const dynamixel_msgs::JointState::ConstPtr& msg) { current_pos[0] = msg->current_pos - offset[0]; temperature[0] = msg->motor_temps[0]; }
+    void UpdateState2(const dynamixel_msgs::JointState::ConstPtr& msg) { current_pos[1] = msg->current_pos - offset[1]; temperature[1] = msg->motor_temps[0]; }
+    void UpdateState3(const dynamixel_msgs::JointState::ConstPtr& msg) { current_pos[2] = msg->current_pos - offset[2]; temperature[2] = msg->motor_temps[0]; }
+    void UpdateState4(const dynamixel_msgs::JointState::ConstPtr& msg) { current_pos[3] = -(msg->current_pos - offset[3]); temperature[3] = msg->motor_temps[0]; }
+    void UpdateState5(const dynamixel_msgs::JointState::ConstPtr& msg) { current_pos[4] = -(msg->current_pos - offset[4]); temperature[4] = msg->motor_temps[0]; }
+};
+
+class FK {
+    //Pointer to the kinematic chain
+    KDL::Chain *chain_p;
+
+    //Create Pointers to Solvers
+    KDL::ChainFkSolverPos_recursive *fksolver_p;
+    KDL::ChainJntToJacSolver *jacsolver_p;
+
+    // Create joint array
+    unsigned int nj;
+
+
+    public:
+    double w[3];
+    double J[3][3];
+    double J_inv[3][3];
+
+    Matrix *J_p, *J_inv_p;
+
+    FK (void) {
+    	//KDL::Chain chain;
+	chain_p = new KDL::Chain;
+
+	//Kinematic Chain for the first 4 Segments
+    	//Frame.DH(a, alpha, d, theta)
+    	chain_p->addSegment(Segment(Joint(Joint::RotZ),Frame::DH(0, PI/2, 0.082, 0)));
+    	chain_p->addSegment(Segment(Joint(Joint::RotZ),Frame::DH(0.137, 0, 0, PI/2)));
+    	chain_p->addSegment(Segment(Joint(Joint::RotZ),Frame::DH(0.108, 0, 0, -PI/2)));
+
+    	// Create solver based on kinematic chain_p
+    	fksolver_p = new KDL::ChainFkSolverPos_recursive(*chain_p);
+    	jacsolver_p = new KDL::ChainJntToJacSolver(*chain_p);
+
+    	J_p = new Matrix(3,3);
+    	J_inv_p = new Matrix(3, 3);
+    }
+
+    void Jnt2Cart (double q[]) {
+    	// Create the frame that will contain the results
+    	KDL::Frame cartpos;
+
+    	KDL::JntArray jointpositions = JntArray(chain_p->getNrOfJoints());
+	for (int i=0;i<3;i++) jointpositions(i)=q[i];
+
+    	// Calculate forward position kinematics
+    	fksolver_p->JntToCart(jointpositions, cartpos);
+
+	for (int i=0;i<3;i++) w[i]=cartpos.p(i);
+    }
+
+    void Jnt2Jac (double q[]) {
+    	KDL::Jacobian jacobian;
+    	jacobian.resize(chain_p->getNrOfJoints());
+
+    	KDL::JntArray jointpositions = JntArray(chain_p->getNrOfJoints());
+	for (int i=0;i<3;i++) jointpositions(i)=q[i];
+
+	jacsolver_p->JntToJac(jointpositions, jacobian);
+	
+	for (int i=0; i<3; i++) for (int j=0; j<3; j++) {
+		J_p->element(i, j) = jacobian(i, j);
+		J[i][j] = jacobian(i, j);
+	}
+    }
+
+    void Jnt2JacInv (double q[]) {
+    	Jnt2Jac(q);
+
+	*J_inv_p = J_p->i();	
+
+	for (int i=0; i<3; i++) for (int j=0; j<3; j++) {
+		J_inv[i][j] = J_inv_p->element(i, j);
+	}
+    }
+};
+
+void ik_pos(double *w, double *q) {
+  // w = [x, y, z, Psi, Phi] mit Psi: Pitch-Winkel und Phi: Roll-Winkel
+  // w = [0, 1, 2,   3,   4]
+
+  double h = w[2] - d1 - d2 * sin(w[3]);
+  double r = sqrt(pow(w[0], 2.0) + pow(w[1], 2.0)) - d2 * cos(w[3]);
+  double s = sqrt(pow(h, 2.0) + pow(r, 2.0));
+
+  double eta = acos(   (s*s - l1 * l1 + l2 * l2)/(2 * s * l2)   );
+  double lambda = asin( l2 / l1 * sin(eta) );
+  double mu = atan2(h, r);
+
+  //Give back q (q defined according to write up, not to real kinematics)
+  q[0] = atan2(w[1], w[0]);
+  q[1] = -mu - lambda + PI/2;
+  q[2] = lambda + eta - PI/2;
+  q[3] = -w[3] - q[1] - q[2];
+  q[4] = -w[4];
+}
+
+bool move_up_up(double w[], float *t, float *t_start)	{
+	if (*t_start==0) *t_start=*t;
+
+	float t_movement = *t-*t_start;
+	float f_sin = 0.6;
+
+	float T=1/f_sin;
+
+	if(t_movement<=T) {
+		//Auf Linie entlang x bei y=z=const
+    		w[2] = 0.219 + 0.07 * abs(sin(2*PI*f_sin*t_movement));
+		return true;
+	}
+	else return false;
+}
+
+
+void sighandler(int sig) { ok = false; }
+
+int main(int argc, char **argv)
+{
+  float f_loop = 50;
+  float T_loop = 1/f_loop;
+
+  //Install signal-handler for Ctrg-C
+  signal(SIGABRT, &sighandler);
+  signal(SIGTERM, &sighandler);
+  signal(SIGINT, &sighandler);
+
+  ros::init(argc, argv, "lamp_control", ros::init_options::NoSigintHandler);
+  ros::NodeHandle n;
+
+  //Make Object of Servo Drivers
+  ServoControl servos;
+  servos.Init(&n, &servos);
+
+  //Make Object of BookPosition
+  BookPosition centre;
+  centre.Init(&n, &centre);
+
+  //Make Object of SkypeInterface
+  SkypeInterface skype;
+  skype.Init(&n, &skype);
+
+  //Make Object of Forward Kinematics
+  FK fkin;
+  
+  ros::Rate loop_rate(f_loop);
+
+  //ROS_INFO("Es wurden %i Parameter uebergeben!", argc-1);
+  //ROS_INFO("f=%f T=%f", f_loop, T_loop);
+  //ROS_INFO("1 Param: %f", atof(*(argv+1)));
+  //ROS_INFO("String 3: %s", *(argv+2));
+
+  float t=0;
+  float t_start=0;
+  float f_sin=0.3;
+
+  //double w[5] = {0.384, 0, 0.3564, 0, 0}; // Default Position
+  double w[5] = {0.384, 0, 0.28, 0, 0}; // Default Position in Cartesian Space [x, y, z, Psi, Phi]
+  double q[5] = {0, 0, 0, 0, 0};	// Joint angles as defined in the write up, not as in the real kinematics
+
+  // Set velocities to low value to minimize dynamical strain on RDL with step signals
+  //double velocities[5] = {0, 0, 0, 0, 0};
+  double velocities[5] = {0, 0, 0, 0, 0};
+  if(ros::ok()) {
+  	servos.SetVel(velocities);
+  	//servos.ComplianceMargin(0);
+  	//servos.ComplianceSlope(64);
+    	ros::spinOnce();
+  }
+
+  //Slow-In Motion Time (avoid strong torques through step signals)
+  double slow_in_time = 2.0;
+
+  //Book tracking: Deviation of Book from the centre of vision
+  double e_x=0;
+  double e_y=0;
+
+  // Maximum Temperature for Overheating Shutdown
+  int max_temperature = 70; 
+
+
+  ROS_INFO("ARGC=%i", argc);
+  if (argc > 1) {
+  //Define command-line flags
+  char rec[] = "record";
+  char play[] = "play";
+
+  //Record a motion pattern
+  if (strcmp(*(argv+1), rec) == 0) {
+  	//Disable servo-torque for teaching
+	bool torque_disable[5] = {false, false, false, false, false};
+  	servos.TorqueEnable(torque_disable);
+
+	std::string rec_file = "/home/ewald/work/garchingDemo/ewald/rdl/data/";
+	if(*(argv+2))	{	rec_file += *(argv+2); }
+	else		{	rec_file += "default"; }
+	rec_file += "_rec.bag";
+
+	//Open the motion bag file for writing
+  	rosbag::Bag bag(rec_file, rosbag::bagmode::Write);
+	//Create a message for the joint angles
+  	rdl::jangs joint_angles;
+  	
+	//Wait a little for the first servo positions to come it
+	ros::Duration(0.5).sleep();
+   	ros::spinOnce();
+
+	while(ok == true) {
+    		//Overheating protection:
+		/*
+    		for(int i = 0; i<5; i++) {
+			if (servos.temperature[i]>=max_temperature) {
+				ok = false;
+		    		ROS_INFO("Heat protection schutdown. Temperature of Joint %i: %i", i+1, servos.temperature[i]);
+			}
+		}
+		*/
+
+   		ROS_INFO("Recording: J1=%f   J2=%f   J3=%f   J4=%f   J5=%f", servos.current_pos[0], servos.current_pos[1], servos.current_pos[2], servos.current_pos[3], servos.current_pos[4]);
+
+   		//write joint angles to a file:
+   		joint_angles.q[0] = servos.current_pos[0];
+   		joint_angles.q[1] = servos.current_pos[1];
+   		joint_angles.q[2] = servos.current_pos[2];
+   		joint_angles.q[3] = servos.current_pos[3];
+   		joint_angles.q[4] = servos.current_pos[4];
+   		bag.write("joint_angles", ros::Time::now(), joint_angles);
+
+   		ros::spinOnce();
+   		loop_rate.sleep();
+   		//t=t+T_loop;
+  	}
+  	bag.close();
+  }
+
+  //Play back a motion pattern
+  if (strcmp(*(argv+1), play) == 0) {
+	std::string rec_file = "/home/chenshengchen/New_lamp_control/rdl_ws/src/rdl/data/";
+	if(*(argv+2))	{	rec_file += *(argv+2); }
+	else		{	rec_file += "default"; }
+	rec_file += "_rec.bag";
+
+	std::string play_file = "/home/chenshengchen/New_lamp_control/rdl_ws/src/rdl/data/";
+	if(*(argv+2))	{	play_file += *(argv+2); }
+	else		{	play_file += "default"; }
+	play_file += "_play.bag";
+
+  	//Load motion bagfile into a BIG array for playback
+  	rosbag::Bag bag(rec_file);
+  	rosbag::View view(bag, rosbag::TopicQuery("joint_angles"));
+ 	
+ 	 float trajectory[view.size()][5];
+ 	 int c=0;
+ 	
+ 	 BOOST_FOREACH(rosbag::MessageInstance const m, view) {
+ 	 	rdl::jangs::ConstPtr i = m.instantiate<rdl::jangs>();
+ 		if (i != NULL) {
+		 	trajectory[c][0] = i->q[0];
+		 	trajectory[c][1] = i->q[1];
+		 	trajectory[c][2] = i->q[2];
+		 	trajectory[c][3] = i->q[3];
+		 	trajectory[c][4] = i->q[4];
+			
+			ROS_INFO("Rec file data sample %i: %f %f %f %f %f", c, trajectory[c][0], trajectory[c][1], trajectory[c][2], trajectory[c][3], trajectory[c][4]);
+		 	c++;
+		 }
+	}
+	bag.close();
+
+	//Open the motion bag file for writing
+  	rosbag::Bag bag_play(play_file, rosbag::bagmode::Write);
+	//Create a message for the joint angles
+  	rdl::jangs joint_angles;
+
+    	q[0] = trajectory[0][0];
+    	q[1] = trajectory[0][1];
+    	q[2] = trajectory[0][2];
+    	q[3] = trajectory[0][3];
+    	q[4] = trajectory[0][4];
+  	servos.SetPos(q);
+	ros::spinOnce();
+   	loop_rate.sleep();
+
+	ROS_INFO("Moving in to the initial trajectory position: %f %f %f %f %f time is %f", q[0], q[1], q[2], q[3], q[4], t);
+
+    	//Slow in to the motion
+    	while(t<=slow_in_time && ok==true) {
+  		velocities[0] = t/slow_in_time*2;
+  		velocities[1] = t/slow_in_time*2;
+  		velocities[2] = t/slow_in_time*2;
+  		velocities[3] = t/slow_in_time*2;
+  		velocities[4] = t/slow_in_time*2;
+
+  		servos.SetVel(velocities);
+
+		ros::spinOnce();
+   		loop_rate.sleep();
+   		t=t+T_loop;
+    	}
+
+	ROS_INFO("After slow in time is: %f / Final velocity: %f", t, velocities[0]);
+
+
+  	int j=0; //Init counter for the sample playback
+    	int sample_count = sizeof(trajectory)/sizeof(float)/5;
+
+  	while(j<sample_count)
+  	{    
+   		//write joint angles to a file:
+   		joint_angles.q[0] = servos.current_pos[0];
+   		joint_angles.q[1] = servos.current_pos[1];
+   		joint_angles.q[2] = servos.current_pos[2];
+   		joint_angles.q[3] = servos.current_pos[3];
+   		joint_angles.q[4] = servos.current_pos[4];
+   		bag_play.write("joint_angles", ros::Time::now(), joint_angles);
+
+    		q[0] = trajectory[j][0];
+    		q[1] = trajectory[j][1];
+    		q[2] = trajectory[j][2];
+    		q[3] = trajectory[j][3];
+    		q[4] = trajectory[j][4];
+
+		j++;
+		
+    		servos.SetPos(q);
+
+    		ros::spinOnce();
+    		loop_rate.sleep();
+    		//t=t+T_loop;
+	}
+	ok = false;
+
+	bag_play.close();
+  }
+
+  }
+
+
+  while(ok == true)
+  {    
+    if(skype.init_mov[0] || skype.init_mov[1]) {
+	std::string rec_file;
+	if (skype.init_mov[0])	rec_file = "/home/ewald/work/garchingDemo/ewald/rdl/data/joy_rec.bag";
+	if (skype.init_mov[1])	rec_file = "/home/ewald/work/garchingDemo/ewald/rdl/data/sadness_rec.bag";
+
+  	//Load motion bagfile into a BIG array for playback
+  	rosbag::Bag bag(rec_file);
+  	rosbag::View view(bag, rosbag::TopicQuery("joint_angles"));
+ 	
+ 	 float trajectory[view.size()][5];
+ 	 int c=0;
+ 	
+ 	 BOOST_FOREACH(rosbag::MessageInstance const m, view) {
+ 	 	rdl::jangs::ConstPtr i = m.instantiate<rdl::jangs>();
+ 		if (i != NULL) {
+		 	trajectory[c][0] = i->q[0];
+		 	trajectory[c][1] = i->q[1];
+		 	trajectory[c][2] = i->q[2];
+		 	trajectory[c][3] = i->q[3];
+		 	trajectory[c][4] = i->q[4];
+		 	c++;
+		 }
+	}
+	bag.close();
+
+    	q[0] = trajectory[0][0];
+    	q[1] = trajectory[0][1];
+    	q[2] = trajectory[0][2];
+    	q[3] = trajectory[0][3];
+    	q[4] = trajectory[0][4];
+  	servos.SetPos(q);
+	ros::spinOnce();
+   	loop_rate.sleep();
+
+	velocities[0] = 0;
+	velocities[1] = 0;
+	velocities[2] = 0;
+	velocities[3] = 0;
+	velocities[4] = 0;
+  	servos.SetVel(velocities);
+    	ros::spinOnce();
+    	loop_rate.sleep();
+
+  	int j=0; //Init counter for the sample playback
+    	int sample_count = sizeof(trajectory)/sizeof(float)/5;
+
+	t = 0;
+  	while(j<sample_count)
+  	{    
+    		//Slow in to the motion
+    		if(t<=slow_in_time) {
+  			velocities[0] = t/slow_in_time*2;
+  			velocities[1] = t/slow_in_time*2;
+  			velocities[2] = t/slow_in_time*2;
+  			velocities[3] = t/slow_in_time*2;
+  			velocities[4] = t/slow_in_time*2;
+  			servos.SetVel(velocities);
+   			t=t+T_loop;
+    		}
+
+    		q[0] = trajectory[j][0];
+    		q[1] = trajectory[j][1];
+    		q[2] = trajectory[j][2];
+    		q[3] = trajectory[j][3];
+    		q[4] = trajectory[j][4];
+
+		j++;
+		
+    		servos.SetPos(q);
+
+    		ros::spinOnce();
+    		loop_rate.sleep();
+	}
+
+	t = 0;
+	skype.init_mov[0]=false;
+	skype.init_mov[1]=false;
+    }
+
+    //Slow in to the motion
+    if (t<=slow_in_time) {
+  	for(int i = 0; i<5; i++) { velocities[i] = t/slow_in_time*2; }
+ 	//for(int i = 0; i<5; i++) { velocities[i] = 0; } // Turn off all movement for now
+  	servos.SetVel(velocities);
+    }
+
+    //Dem schwarzen Feld folgen!
+    e_x = centre.x-320;
+    e_y = centre.y-240;
+
+    w[0] = w[0] - e_y/90000;
+    w[1] = w[1] - e_x/90000;
+
+    ik_pos(w, q); // Inverse kinematics: w->q
+
+    //Overheating protection:
+    for(int i = 0; i<5; i++) {
+	if (servos.temperature[i]>=max_temperature) {
+		ok = false;
+    		ROS_INFO("Heat protection schutdown. Temperature of Joint %i: %i", i+1, servos.temperature[i]);
+	}
+    }
+
+    servos.SetPos(q);
+
+    ros::spinOnce();
+    loop_rate.sleep();
+    t=t+T_loop;
+  }
+
+  // Ctrg-C has been caught: Do proper shutdown
+  ROS_INFO("Ctrg-C: Turning OFF the motors and shutting down!");
+  bool torque_enable[5] = {false, false, false, false, false};
+  servos.TorqueEnable(torque_enable);
+
+  ros::shutdown();
+  
+  return 0;
+}
+

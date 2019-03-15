@@ -1,0 +1,30 @@
+<launch>
+    <!--
+    <node name="skype_interface" pkg="skype_interface" type="skype_node"/>
+    -->
+
+    <rosparam file="$(find rdl)/config/dynamixel_joint_controllers.yaml" command="load"/>
+
+    <node name="dxl_manager" pkg="dynamixel_controllers" type="controller_manager.py" required="true" output="screen">
+        <rosparam>
+            namespace: dxl_manager
+            serial_ports:
+                dnxl_ttl_port:
+                    port_name: "/dev/ttyUSB0"
+                    baud_rate: 1000000
+                    min_motor_id: 4
+                    max_motor_id: 4
+                    update_rate: 50
+        </rosparam>
+    </node>
+
+
+    <node name="controller_spawner_4" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port=dnxl_ttl_port
+                --type=simple
+                ax12_controller_4"
+          output="screen">
+    </node>
+
+</launch>
