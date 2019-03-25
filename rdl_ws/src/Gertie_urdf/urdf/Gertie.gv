@@ -1,0 +1,11 @@
+digraph G {
+node [shape=box];
+"base_link" [label="base_link"];
+"base_cylinder" [label="base_cylinder"];
+"active_cylinder" [label="active_cylinder"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"base_link" -> "base_link_to_base_cylinder" [label="xyz: 0 0 0.085 \nrpy: 0 -0 0"]
+"base_link_to_base_cylinder" -> "base_cylinder"
+"base_cylinder" -> "base_cylinder_to_active_cylinder" [label="xyz: 0 0 0.27 \nrpy: 0 -0 0"]
+"base_cylinder_to_active_cylinder" -> "active_cylinder"
+}

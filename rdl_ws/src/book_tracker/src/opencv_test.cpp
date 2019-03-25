@@ -1,5 +1,6 @@
 #include <cv.h>
 #include <highgui.h>
+#include <opencv2/core/core.hpp>
 //#include "opencv2/opencv.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 #include <iostream>
@@ -30,7 +31,7 @@ int main(int, char**)
     int harris_eig_block_size = 3;
     bool harris_use_harris = true;
     
-    namedWindow("edges",0);
+    cvNamedWindow("edges",0);
     for(;;)
     {
         cap >> frame; // get a new frame from camera
@@ -55,8 +56,8 @@ int main(int, char**)
 
         //GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5);
         //Canny(edges, edges, 0, 30, 3);
-        imshow("edges", frame);
-        if(waitKey(30) >= 0) break;
+        cvShowImage("edges", frame);
+        if(cvWaitKey(30) >= 0) break;
     }
 
     //const Mat bla;

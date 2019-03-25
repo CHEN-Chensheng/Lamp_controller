@@ -1,4 +1,5 @@
 #include "ros/ros.h"
+//#include "opencv2/opencv.hpp"
 #include "book_tracker/book_pos.h"
 #include <cv.h>
 #include <highgui.h>
@@ -10,12 +11,12 @@
 
 #define USEC_PER_SEC 1000000L
 
-CvScalar target_color[4] = { // in BGR order 
-		{{   0,   0, 255,   0 }},  // red
-		{{   0, 255,   0,   0 }},  // green
-		{{ 255,   0,   0,   0 }},  // blue
-		{{   0, 255, 255,   0 }}   // yellow
-};
+CvScalar target_color[4] = ( // in BGR order
+       0,   0, 255,   0   // red
+       //0, 255,   0,   0 ,  // green
+       //255,   0,   0,   0,  // blue
+       //0, 255, 255,   0  ,  // yellow
+);
 
 void change_brightcont(IplImage *src_image, IplImage *dst_image, int brightness=0, int contrast=0)
 {
@@ -23,7 +24,7 @@ void change_brightcont(IplImage *src_image, IplImage *dst_image, int brightness=
     uchar lut[256];
     CvMat* lut_mat;
     lut_mat = cvCreateMatHeader( 1, 256, CV_8UC1 );
-    cvSetData( lut_mat, lut, 0 );
+    cvSetData( lut_mat, lut, 0 );  //The new image--"lut_mat" is just the size of lut
 
     if( contrast > 0 )
     {
@@ -63,7 +64,7 @@ void change_brightcont(IplImage *src_image, IplImage *dst_image, int brightness=
 int main(int argc, char *argv[]) {
 	//double centre[2] = {320, 240};
 
-	CvCapture* capture = 0;
+  CvCapture* capture;
 	IplImage* curr_frame = 0; // current video frame
 	IplImage* gray_frame = 0; // grayscale version of current frame
 	int w, h; // video frame size
@@ -75,7 +76,9 @@ int main(int argc, char *argv[]) {
 	centre.y = 240;
 	
 	// Capture from a webcam
-	capture = cvCaptureFromCAM(atoi(*(argv+1)));
+  //capture = cvCaptureFromCAM(atoi(*(argv+1)));
+  //capture = cvCaptureFromCAM(atoi(*(argv+1)));
+  capture = cvCaptureFromCAM(1);
 	if ( !capture) {
 		fprintf(stderr, "ERROR: capture is NULL... Exiting\n");
 		//getchar();

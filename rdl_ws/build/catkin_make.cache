@@ -1,2 +1,2 @@
-book_tracker:control_msgs/control_msgs:dynamixel_motor/dynamixel_controllers:dynamixel_motor/dynamixel_driver:dynamixel_motor/dynamixel_motor:dynamixel_motor/dynamixel_msgs:dynamixel_motor/dynamixel_tutorials:rdl
--DCATKIN_DEVEL_PREFIX=/home/chenshengchen/New_lamp_control/rdl_ws/devel -DCMAKE_INSTALL_PREFIX=/home/chenshengchen/New_lamp_control/rdl_ws/install -G Unix Makefiles
+Gertie_urdf:book_tracker:control_msgs/control_msgs:dynamixel_motor/dynamixel_controllers:dynamixel_motor/dynamixel_driver:dynamixel_motor/dynamixel_motor:dynamixel_motor/dynamixel_msgs:dynamixel_motor/dynamixel_tutorials:rdl
+-G CodeBlocks - Unix Makefiles -DCMAKE_BUILD_TYPE=Debug -DCATKIN_DEVEL_PREFIX=/home/chenshengchen/New_lamp_control/rdl_ws/devel -DCMAKE_INSTALL_PREFIX=/home/chenshengchen/New_lamp_control/rdl_ws/install

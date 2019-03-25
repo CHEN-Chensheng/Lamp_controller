@@ -213,12 +213,12 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
-#add_executable(book_detect src/book_detect.cpp)
+add_executable(book_detect src/book_detect.cpp)
 #add_dependencies(book_detect ${PROJECT_NAME}_generate_messages_cpp)
-#target_link_libraries(book_detect ${OpenCV_LIBS} ${catkin_LIBRARIES} ${roscpp_LIBRARIES})
+target_link_libraries(book_detect ${OpenCV_LIBS} ${catkin_LIBRARIES} ${roscpp_LIBRARIES})
 
-#add_executable(camshiftdemo src/camshiftdemo.cpp)
-#target_link_libraries(camshiftdemo ${OpenCV_LIBS} ${catkin_LIBRARIES} ${roscpp_LIBRARIES})
+add_executable(camshiftdemo src/camshiftdemo.cpp)
+target_link_libraries(camshiftdemo ${OpenCV_LIBS} ${catkin_LIBRARIES} ${roscpp_LIBRARIES})
 
 #add_executable(good_features src/good_features.cpp)
 #target_link_libraries(good_features ${OpenCV_LIBS} ${catkin_LIBRARIES} ${roscpp_LIBRARIES})

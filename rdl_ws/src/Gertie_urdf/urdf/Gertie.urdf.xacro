@@ -1,0 +1,309 @@
+<?xml version="1.0"?>
+<robot name="Gertie" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="base_link_length" value="0.05" />
+  <xacro:property name="base_link_radius" value="0.2375" />
+
+  <xacro:property name="base_cylinder_link_length" value="0.15" />
+  <xacro:property name="base_cylinder_link_radius" value="0.19" />
+
+  <xacro:property name="active_cylinder_link_length" value="0.1075" />
+  <xacro:property name="active_cylinder_link_radius" value="0.0748" />
+
+  <xacro:property name="first_active_rod_length" value="0.05" />
+  <xacro:property name="first_active_rod_width" value="0.05" />
+  <xacro:property name="first_active_rod_height" value="0.74" />
+
+  <xacro:property name="second_active_rod_length" value="0.05" />
+  <xacro:property name="second_active_rod_width" value="0.05" />
+  <xacro:property name="second_active_rod_height" value="0.5" />
+
+  <xacro:property name="third_active_rod_length" value="0.045" />
+  <xacro:property name="third_active_rod_width" value="0.045" />
+  <xacro:property name="third_active_rod_height" value="0.15" />
+
+  <xacro:property name="fourth_active_rod_length" value="0.065" />
+  <xacro:property name="fourth_active_rod_width" value="0.045" />
+  <xacro:property name="fourth_active_rod_height" value="0.15" />
+
+  <xacro:property name="fixed_cylinder_link_length" value="0.13" />
+  <xacro:property name="fixed_cylinder_link_radius" value="0.13" />
+
+  <material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+  <material name="seegreen">
+    <color rgba="0.18 0.545 0.34 1"/>
+  </material>
+  <material name="red">
+    <color rgba="0.8 0 0 1"/>
+  </material>
+  <material name="transparent">
+    <color rgba="0.8 0 0 0"/>
+  </material>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="${base_link_length}" radius="${base_link_radius}"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="${base_link_length}" radius="${base_link_radius}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <link name="base_cylinder">
+    <visual>
+      <origin rpy="0.0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="${base_cylinder_link_length}" radius="${base_cylinder_link_radius}"/>
+      </geometry>
+      <material name="seegreen"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="${base_cylinder_link_length}" radius="${base_cylinder_link_radius}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="base_link_to_base_cylinder" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_cylinder"/>
+    <origin xyz="0 0 ${(base_link_length+base_cylinder_link_length)/2}"/>
+  </joint>
+
+  <link name="active_cylinder">
+    <visual>
+      <origin rpy="0.0 0 0" xyz="0 0 0.0"/>
+      <geometry>
+        <cylinder length="${active_cylinder_link_length}" radius="${active_cylinder_link_radius}"/>
+      </geometry>
+      <material name="seegreen"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="${active_cylinder_link_length}" radius="${active_cylinder_link_length}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="base_cylinder_to_active_cylinder" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort="100.0" lower="-1.57" upper="1.57" velocity="0.5"/>
+    <origin rpy="0 0 0" xyz="0 0 ${(base_cylinder_link_length+active_cylinder_link_length)/2}"/>
+    <parent link="base_cylinder"/>
+    <child link="active_cylinder"/>
+  </joint>
+
+  <link name="first_active_rod">
+    <visual>
+      <origin rpy="0.0 0 0" xyz="0 0 ${first_active_rod_height/2.5}"/>  //This controls the orginal point of the link
+      <geometry>
+        <box size="${first_active_rod_length} ${first_active_rod_width} ${first_active_rod_height}"/>
+      </geometry>
+      <material name="seegreen"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${first_active_rod_length} ${first_active_rod_width} ${first_active_rod_height}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="active_cylinder_to_first_active_rod" type="revolute">
+    <axis xyz="0 1 0"/>
+    <limit effort="100.0" lower="-0.265" upper="1.305" velocity="0.5"/>
+    <origin rpy="0 -0.52 0" xyz="0 0 ${active_cylinder_link_length/2}"/>
+    <parent link="active_cylinder"/>
+    <child link="first_active_rod"/>
+  </joint>
+
+  <link name="second_active_rod">
+    <visual>
+      <origin rpy="0.0 0 0" xyz="0 0 ${second_active_rod_height/2.5}"/>  //This controls the orginal point of the link
+      <geometry>
+        <box size="${second_active_rod_length} ${second_active_rod_width} ${second_active_rod_height}"/>
+      </geometry>
+      <material name="seegreen"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${second_active_rod_length} ${second_active_rod_width} ${second_active_rod_height}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="first_active_rod_to_second_active_rod" type="revolute">
+    <axis xyz="0 1 0"/>
+    <limit effort="100.0" lower="-0.785" upper="0.785" velocity="0.5"/>
+    <origin rpy="0 1.98 0" xyz="0 0 ${first_active_rod_height-0.1}"/>
+    <parent link="first_active_rod"/>
+    <child link="second_active_rod"/>
+  </joint>
+
+  <link name="third_active_rod">
+    <visual>
+      <origin rpy="0.0 0 0" xyz="-0.01 0 ${-third_active_rod_height+0.14}"/>  //This controls the orginal point of the link
+      <geometry>
+        <box size="${third_active_rod_length} ${third_active_rod_width} ${third_active_rod_height}"/>
+      </geometry>
+      <material name="seegreen"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${third_active_rod_length} ${third_active_rod_width} ${third_active_rod_height}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="second_active_rod_to_third_active_rod" type="revolute">
+    <axis xyz="0 1 0"/>
+    <limit effort="100.0" lower="0.0" upper="1.047" velocity="0.5"/>
+    <origin rpy="0 0.349 0" xyz="0 0 ${second_active_rod_height-0.1}"/>
+    <parent link="second_active_rod"/>
+    <child link="third_active_rod"/>
+  </joint>
+
+  <link name="first_sphere">
+    <visual>
+      <origin rpy="0.0 0 0" xyz="0.02 0 ${-third_active_rod_length-0.05}"/>  //This controls the orginal point of the link
+      <geometry>
+        <sphere radius = "0.04"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius = "0.04"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="third_active_rod_to_first_sphere" type="fixed">
+    <axis xyz="0 1 0"/>
+    <limit effort="100.0" lower="0.0" upper="1.047" velocity="0.5"/>
+    <origin rpy="0 0.349 0" xyz="0 0 0"/>
+    <parent link="third_active_rod"/>
+    <child link="first_sphere"/>
+  </joint>
+
+  <link name="fourth_active_rod">
+    <visual>
+      <origin rpy="0.0 0 0" xyz="${third_active_rod_width/2+0.01} 0 ${third_active_rod_height-0.01}"/>  //This controls the orginal point of the link
+      <geometry>
+        <box size="${fourth_active_rod_length} ${fourth_active_rod_width} ${fourth_active_rod_height}"/>
+      </geometry>
+      <material name="seegreen"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${fourth_active_rod_length} ${fourth_active_rod_width} ${fourth_active_rod_height}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="fourth_active_rod_to_third_active_rod" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort="100.0" lower="-1.57" upper="1.57" velocity="0.5"/>
+    <origin rpy="0 0 0" xyz="${-third_active_rod_width/2-0.01} 0 0"/>
+    <parent link="third_active_rod"/>
+    <child link="fourth_active_rod"/>
+  </joint>
+
+
+  <link name="second_sphere_of_lampshade">
+    <visual>
+      <origin rpy="0.0 0 0" xyz="0.02 0 0"/>  //This controls the orginal point of the link
+      <geometry>
+        <sphere radius = "0.12"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius = "0.12"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="second_sphere_of_lampshade_to_fourth_active_rod" type="fixed">
+    <axis xyz="0 1 0"/>
+    <limit effort="100.0" lower="0.0" upper="1.047" velocity="0.5"/>
+    <origin rpy="-0.05 0 0" xyz="0 0 ${fourth_active_rod_height+0.18}"/>
+    <parent link="fourth_active_rod"/>
+    <child link="second_sphere_of_lampshade"/>
+  </joint>
+
+  <link name="fixed_cylinder">
+    <visual>
+      <origin rpy="0 1.505 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="${fixed_cylinder_link_length}" radius="${fixed_cylinder_link_radius}"/>
+      </geometry>
+      <material name="seegreen"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="${fixed_cylinder_link_length}" radius="${fixed_cylinder_link_radius}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="10"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="fixed_cylinder_to_fourth_active_rod" type="fixed">
+    <origin xyz="0.05 0 ${-fourth_active_rod_height/2+0.41}"/>
+    <parent link="fourth_active_rod"/>
+    <child link="fixed_cylinder"/>
+  </joint>
+
+</robot>

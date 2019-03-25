@@ -681,7 +681,7 @@ dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_gennodejs
 
 # Build rule for subdir invocation for target.
 dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_gennodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_gennodejs.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 .PHONY : dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_gennodejs.dir/rule
@@ -893,12 +893,12 @@ dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_
 dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_py.dir/all: dynamixel_motor/dynamixel_controllers/CMakeFiles/_dynamixel_controllers_generate_messages_check_deps_SetComplianceSlope.dir/all
 	$(MAKE) -f dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_py.dir/build.make dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_py.dir/depend
 	$(MAKE) -f dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_py.dir/build.make dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=84,85,86,87 "Built target dynamixel_controllers_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=85,86,87 "Built target dynamixel_controllers_generate_messages_py"
 .PHONY : dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_py.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 .PHONY : dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_py.dir/rule
@@ -1109,12 +1109,12 @@ dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_
 dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_nodejs.dir/all: dynamixel_motor/dynamixel_controllers/CMakeFiles/_dynamixel_controllers_generate_messages_check_deps_SetComplianceSlope.dir/all
 	$(MAKE) -f dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_nodejs.dir/build.make dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_nodejs.dir/depend
 	$(MAKE) -f dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_nodejs.dir/build.make dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=82,83 "Built target dynamixel_controllers_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=82,83,84 "Built target dynamixel_controllers_generate_messages_nodejs"
 .PHONY : dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
 dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_nodejs.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 .PHONY : dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_generate_messages_nodejs.dir/rule
@@ -1146,7 +1146,7 @@ dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_genpy.dir
 
 # Build rule for subdir invocation for target.
 dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_genpy.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_genpy.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 .PHONY : dynamixel_motor/dynamixel_controllers/CMakeFiles/dynamixel_controllers_genpy.dir/rule
@@ -1996,7 +1996,7 @@ control_msgs/control_msgs/CMakeFiles/control_msgs_gennodejs.dir/all: control_msg
 
 # Build rule for subdir invocation for target.
 control_msgs/control_msgs/CMakeFiles/control_msgs_gennodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 14
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 13
 	$(MAKE) -f CMakeFiles/Makefile2 control_msgs/control_msgs/CMakeFiles/control_msgs_gennodejs.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 .PHONY : control_msgs/control_msgs/CMakeFiles/control_msgs_gennodejs.dir/rule
@@ -2179,12 +2179,12 @@ control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_nodejs.dir/a
 control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_nodejs.dir/all: control_msgs/control_msgs/CMakeFiles/_control_msgs_generate_messages_check_deps_FollowJointTrajectoryActionGoal.dir/all
 	$(MAKE) -f control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_nodejs.dir/build.make control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_nodejs.dir/depend
 	$(MAKE) -f control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_nodejs.dir/build.make control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=45,46,47,48,49,50,51,52,53,54,55,56,57,58 "Built target control_msgs_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=46,47,48,49,50,51,52,53,54,55,56,57,58 "Built target control_msgs_generate_messages_nodejs"
 .PHONY : control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
 control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_nodejs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 14
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 13
 	$(MAKE) -f CMakeFiles/Makefile2 control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_nodejs.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 .PHONY : control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_nodejs.dir/rule
@@ -2289,7 +2289,7 @@ control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_eus.dir/all:
 control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_eus.dir/all: control_msgs/control_msgs/CMakeFiles/_control_msgs_generate_messages_check_deps_FollowJointTrajectoryActionGoal.dir/all
 	$(MAKE) -f control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_eus.dir/build.make control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_eus.dir/depend
 	$(MAKE) -f control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_eus.dir/build.make control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=18,19,20,21,22,23,24,25,26,27,28,29,30 "Built target control_msgs_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=19,20,21,22,23,24,25,26,27,28,29,30,31 "Built target control_msgs_generate_messages_eus"
 .PHONY : control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2463,7 +2463,7 @@ control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_cpp.dir/all:
 control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_cpp.dir/all: control_msgs/control_msgs/CMakeFiles/_control_msgs_generate_messages_check_deps_FollowJointTrajectoryActionGoal.dir/all
 	$(MAKE) -f control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_cpp.dir/build.make control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_cpp.dir/depend
 	$(MAKE) -f control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_cpp.dir/build.make control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=4,5,6,7,8,9,10,11,12,13,14,15,16,17 "Built target control_msgs_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=5,6,7,8,9,10,11,12,13,14,15,16,17,18 "Built target control_msgs_generate_messages_cpp"
 .PHONY : control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2957,7 +2957,7 @@ control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_lisp.dir/all
 control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_lisp.dir/all: control_msgs/control_msgs/CMakeFiles/_control_msgs_generate_messages_check_deps_FollowJointTrajectoryActionGoal.dir/all
 	$(MAKE) -f control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_lisp.dir/build.make control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_lisp.dir/depend
 	$(MAKE) -f control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_lisp.dir/build.make control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=31,32,33,34,35,36,37,38,39,40,41,42,43,44 "Built target control_msgs_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=32,33,34,35,36,37,38,39,40,41,42,43,44,45 "Built target control_msgs_generate_messages_lisp"
 .PHONY : control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
@@ -3995,7 +3995,7 @@ all: control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages.dir/all
 
 # Build rule for subdir invocation for target.
 control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 69
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 68
 	$(MAKE) -f CMakeFiles/Makefile2 control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 .PHONY : control_msgs/control_msgs/CMakeFiles/control_msgs_generate_messages.dir/rule
@@ -4403,11 +4403,15 @@ clean: control_msgs/control_msgs/CMakeFiles/_control_msgs_generate_messages_chec
 # Directory level rules for directory book_tracker
 
 # Convenience name for "all" pass in the directory.
+book_tracker/all: book_tracker/CMakeFiles/camshiftdemo.dir/all
+book_tracker/all: book_tracker/CMakeFiles/book_detect.dir/all
 book_tracker/all: book_tracker/CMakeFiles/book_tracker_generate_messages.dir/all
 
 .PHONY : book_tracker/all
 
 # Convenience name for "clean" pass in the directory.
+book_tracker/clean: book_tracker/CMakeFiles/camshiftdemo.dir/clean
+book_tracker/clean: book_tracker/CMakeFiles/book_detect.dir/clean
 book_tracker/clean: book_tracker/CMakeFiles/book_tracker_genpy.dir/clean
 book_tracker/clean: book_tracker/CMakeFiles/book_tracker_generate_messages_py.dir/clean
 book_tracker/clean: book_tracker/CMakeFiles/book_tracker_gennodejs.dir/clean
@@ -4442,6 +4446,80 @@ book_tracker/clean: book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.
 book_tracker/preinstall:
 
 .PHONY : book_tracker/preinstall
+
+#=============================================================================
+# Target rules for target book_tracker/CMakeFiles/camshiftdemo.dir
+
+# All Build rule for target.
+book_tracker/CMakeFiles/camshiftdemo.dir/all:
+	$(MAKE) -f book_tracker/CMakeFiles/camshiftdemo.dir/build.make book_tracker/CMakeFiles/camshiftdemo.dir/depend
+	$(MAKE) -f book_tracker/CMakeFiles/camshiftdemo.dir/build.make book_tracker/CMakeFiles/camshiftdemo.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num= "Built target camshiftdemo"
+.PHONY : book_tracker/CMakeFiles/camshiftdemo.dir/all
+
+# Include target in all.
+all: book_tracker/CMakeFiles/camshiftdemo.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+book_tracker/CMakeFiles/camshiftdemo.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 book_tracker/CMakeFiles/camshiftdemo.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
+.PHONY : book_tracker/CMakeFiles/camshiftdemo.dir/rule
+
+# Convenience name for target.
+camshiftdemo: book_tracker/CMakeFiles/camshiftdemo.dir/rule
+
+.PHONY : camshiftdemo
+
+# clean rule for target.
+book_tracker/CMakeFiles/camshiftdemo.dir/clean:
+	$(MAKE) -f book_tracker/CMakeFiles/camshiftdemo.dir/build.make book_tracker/CMakeFiles/camshiftdemo.dir/clean
+.PHONY : book_tracker/CMakeFiles/camshiftdemo.dir/clean
+
+# clean rule for target.
+clean: book_tracker/CMakeFiles/camshiftdemo.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target book_tracker/CMakeFiles/book_detect.dir
+
+# All Build rule for target.
+book_tracker/CMakeFiles/book_detect.dir/all:
+	$(MAKE) -f book_tracker/CMakeFiles/book_detect.dir/build.make book_tracker/CMakeFiles/book_detect.dir/depend
+	$(MAKE) -f book_tracker/CMakeFiles/book_detect.dir/build.make book_tracker/CMakeFiles/book_detect.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num= "Built target book_detect"
+.PHONY : book_tracker/CMakeFiles/book_detect.dir/all
+
+# Include target in all.
+all: book_tracker/CMakeFiles/book_detect.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+book_tracker/CMakeFiles/book_detect.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 book_tracker/CMakeFiles/book_detect.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
+.PHONY : book_tracker/CMakeFiles/book_detect.dir/rule
+
+# Convenience name for target.
+book_detect: book_tracker/CMakeFiles/book_detect.dir/rule
+
+.PHONY : book_detect
+
+# clean rule for target.
+book_tracker/CMakeFiles/book_detect.dir/clean:
+	$(MAKE) -f book_tracker/CMakeFiles/book_detect.dir/build.make book_tracker/CMakeFiles/book_detect.dir/clean
+.PHONY : book_tracker/CMakeFiles/book_detect.dir/clean
+
+# clean rule for target.
+clean: book_tracker/CMakeFiles/book_detect.dir/clean
+
+.PHONY : clean
 
 #=============================================================================
 # Target rules for target book_tracker/CMakeFiles/book_tracker_genpy.dir
@@ -4483,7 +4561,7 @@ book_tracker/CMakeFiles/book_tracker_generate_messages_py.dir/all: dynamixel_mot
 book_tracker/CMakeFiles/book_tracker_generate_messages_py.dir/all: book_tracker/CMakeFiles/_book_tracker_generate_messages_check_deps_book_pos.dir/all
 	$(MAKE) -f book_tracker/CMakeFiles/book_tracker_generate_messages_py.dir/build.make book_tracker/CMakeFiles/book_tracker_generate_messages_py.dir/depend
 	$(MAKE) -f book_tracker/CMakeFiles/book_tracker_generate_messages_py.dir/build.make book_tracker/CMakeFiles/book_tracker_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=3 "Built target book_tracker_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=4 "Built target book_tracker_generate_messages_py"
 .PHONY : book_tracker/CMakeFiles/book_tracker_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
@@ -4933,12 +5011,12 @@ book_tracker/CMakeFiles/book_tracker_generate_messages_cpp.dir/all: dynamixel_mo
 book_tracker/CMakeFiles/book_tracker_generate_messages_cpp.dir/all: book_tracker/CMakeFiles/_book_tracker_generate_messages_check_deps_book_pos.dir/all
 	$(MAKE) -f book_tracker/CMakeFiles/book_tracker_generate_messages_cpp.dir/build.make book_tracker/CMakeFiles/book_tracker_generate_messages_cpp.dir/depend
 	$(MAKE) -f book_tracker/CMakeFiles/book_tracker_generate_messages_cpp.dir/build.make book_tracker/CMakeFiles/book_tracker_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num= "Built target book_tracker_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=2 "Built target book_tracker_generate_messages_cpp"
 .PHONY : book_tracker/CMakeFiles/book_tracker_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
 book_tracker/CMakeFiles/book_tracker_generate_messages_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 book_tracker/CMakeFiles/book_tracker_generate_messages_cpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 .PHONY : book_tracker/CMakeFiles/book_tracker_generate_messages_cpp.dir/rule
@@ -5034,7 +5112,7 @@ book_tracker/CMakeFiles/book_tracker_geneus.dir/all: book_tracker/CMakeFiles/boo
 
 # Build rule for subdir invocation for target.
 book_tracker/CMakeFiles/book_tracker_geneus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 book_tracker/CMakeFiles/book_tracker_geneus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 .PHONY : book_tracker/CMakeFiles/book_tracker_geneus.dir/rule
@@ -5098,7 +5176,7 @@ book_tracker/CMakeFiles/book_tracker_gencpp.dir/all: book_tracker/CMakeFiles/boo
 
 # Build rule for subdir invocation for target.
 book_tracker/CMakeFiles/book_tracker_gencpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 book_tracker/CMakeFiles/book_tracker_gencpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 .PHONY : book_tracker/CMakeFiles/book_tracker_gencpp.dir/rule
@@ -5139,7 +5217,7 @@ all: book_tracker/CMakeFiles/book_tracker_generate_messages.dir/all
 
 # Build rule for subdir invocation for target.
 book_tracker/CMakeFiles/book_tracker_generate_messages.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 book_tracker/CMakeFiles/book_tracker_generate_messages.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 .PHONY : book_tracker/CMakeFiles/book_tracker_generate_messages.dir/rule
@@ -5203,7 +5281,7 @@ book_tracker/CMakeFiles/book_tracker_genlisp.dir/all: book_tracker/CMakeFiles/bo
 
 # Build rule for subdir invocation for target.
 book_tracker/CMakeFiles/book_tracker_genlisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 book_tracker/CMakeFiles/book_tracker_genlisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 .PHONY : book_tracker/CMakeFiles/book_tracker_genlisp.dir/rule
@@ -5263,12 +5341,12 @@ book_tracker/CMakeFiles/book_tracker_generate_messages_eus.dir/all: dynamixel_mo
 book_tracker/CMakeFiles/book_tracker_generate_messages_eus.dir/all: book_tracker/CMakeFiles/_book_tracker_generate_messages_check_deps_book_pos.dir/all
 	$(MAKE) -f book_tracker/CMakeFiles/book_tracker_generate_messages_eus.dir/build.make book_tracker/CMakeFiles/book_tracker_generate_messages_eus.dir/depend
 	$(MAKE) -f book_tracker/CMakeFiles/book_tracker_generate_messages_eus.dir/build.make book_tracker/CMakeFiles/book_tracker_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=2 "Built target book_tracker_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num= "Built target book_tracker_generate_messages_eus"
 .PHONY : book_tracker/CMakeFiles/book_tracker_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 book_tracker/CMakeFiles/book_tracker_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 	$(MAKE) -f CMakeFiles/Makefile2 book_tracker/CMakeFiles/book_tracker_generate_messages_eus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 .PHONY : book_tracker/CMakeFiles/book_tracker_generate_messages_eus.dir/rule
@@ -5296,12 +5374,12 @@ book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir/all: dynamixel_m
 book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir/all: book_tracker/CMakeFiles/_book_tracker_generate_messages_check_deps_book_pos.dir/all
 	$(MAKE) -f book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir/build.make book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir/depend
 	$(MAKE) -f book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir/build.make book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num= "Built target book_tracker_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles --progress-num=3 "Built target book_tracker_generate_messages_lisp"
 .PHONY : book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenshengchen/New_lamp_control/rdl_ws/build/CMakeFiles 0
 .PHONY : book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir/rule
@@ -5320,6 +5398,24 @@ book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir/clean:
 clean: book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir/clean
 
 .PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory Gertie_urdf
+
+# Convenience name for "all" pass in the directory.
+Gertie_urdf/all:
+
+.PHONY : Gertie_urdf/all
+
+# Convenience name for "clean" pass in the directory.
+Gertie_urdf/clean:
+
+.PHONY : Gertie_urdf/clean
+
+# Convenience name for "preinstall" pass in the directory.
+Gertie_urdf/preinstall:
+
+.PHONY : Gertie_urdf/preinstall
 
 #=============================================================================
 # Directory level rules for directory rdl

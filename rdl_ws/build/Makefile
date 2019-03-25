@@ -70,8 +70,8 @@ install/fast: preinstall/fast
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -1700,6 +1700,32 @@ _control_msgs_generate_messages_check_deps_FollowJointTrajectoryActionGoal/fast:
 .PHONY : _control_msgs_generate_messages_check_deps_FollowJointTrajectoryActionGoal/fast
 
 #=============================================================================
+# Target rules for targets named camshiftdemo
+
+# Build rule for target.
+camshiftdemo: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 camshiftdemo
+.PHONY : camshiftdemo
+
+# fast build rule for target.
+camshiftdemo/fast:
+	$(MAKE) -f book_tracker/CMakeFiles/camshiftdemo.dir/build.make book_tracker/CMakeFiles/camshiftdemo.dir/build
+.PHONY : camshiftdemo/fast
+
+#=============================================================================
+# Target rules for targets named book_detect
+
+# Build rule for target.
+book_detect: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 book_detect
+.PHONY : book_detect
+
+# fast build rule for target.
+book_detect/fast:
+	$(MAKE) -f book_tracker/CMakeFiles/book_detect.dir/build.make book_tracker/CMakeFiles/book_detect.dir/build
+.PHONY : book_detect/fast
+
+#=============================================================================
 # Target rules for targets named book_tracker_genpy
 
 # Build rule for target.
@@ -2662,6 +2688,8 @@ help:
 	@echo "... _control_msgs_generate_messages_check_deps_FollowJointTrajectoryResult"
 	@echo "... _control_msgs_generate_messages_check_deps_FollowJointTrajectoryActionResult"
 	@echo "... _control_msgs_generate_messages_check_deps_FollowJointTrajectoryActionGoal"
+	@echo "... camshiftdemo"
+	@echo "... book_detect"
 	@echo "... book_tracker_genpy"
 	@echo "... book_tracker_generate_messages_py"
 	@echo "... book_tracker_gennodejs"

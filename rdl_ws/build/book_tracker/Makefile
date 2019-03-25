@@ -81,8 +81,8 @@ rebuild_cache/fast: rebuild_cache
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -164,6 +164,36 @@ preinstall/fast:
 depend:
 	cd /home/chenshengchen/New_lamp_control/rdl_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+# Convenience name for target.
+book_tracker/CMakeFiles/camshiftdemo.dir/rule:
+	cd /home/chenshengchen/New_lamp_control/rdl_ws/build && $(MAKE) -f CMakeFiles/Makefile2 book_tracker/CMakeFiles/camshiftdemo.dir/rule
+.PHONY : book_tracker/CMakeFiles/camshiftdemo.dir/rule
+
+# Convenience name for target.
+camshiftdemo: book_tracker/CMakeFiles/camshiftdemo.dir/rule
+
+.PHONY : camshiftdemo
+
+# fast build rule for target.
+camshiftdemo/fast:
+	cd /home/chenshengchen/New_lamp_control/rdl_ws/build && $(MAKE) -f book_tracker/CMakeFiles/camshiftdemo.dir/build.make book_tracker/CMakeFiles/camshiftdemo.dir/build
+.PHONY : camshiftdemo/fast
+
+# Convenience name for target.
+book_tracker/CMakeFiles/book_detect.dir/rule:
+	cd /home/chenshengchen/New_lamp_control/rdl_ws/build && $(MAKE) -f CMakeFiles/Makefile2 book_tracker/CMakeFiles/book_detect.dir/rule
+.PHONY : book_tracker/CMakeFiles/book_detect.dir/rule
+
+# Convenience name for target.
+book_detect: book_tracker/CMakeFiles/book_detect.dir/rule
+
+.PHONY : book_detect
+
+# fast build rule for target.
+book_detect/fast:
+	cd /home/chenshengchen/New_lamp_control/rdl_ws/build && $(MAKE) -f book_tracker/CMakeFiles/book_detect.dir/build.make book_tracker/CMakeFiles/book_detect.dir/build
+.PHONY : book_detect/fast
 
 # Convenience name for target.
 book_tracker/CMakeFiles/book_tracker_genpy.dir/rule:
@@ -570,6 +600,60 @@ book_tracker_generate_messages_lisp/fast:
 	cd /home/chenshengchen/New_lamp_control/rdl_ws/build && $(MAKE) -f book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir/build.make book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir/build
 .PHONY : book_tracker_generate_messages_lisp/fast
 
+src/book_detect.o: src/book_detect.cpp.o
+
+.PHONY : src/book_detect.o
+
+# target to build an object file
+src/book_detect.cpp.o:
+	cd /home/chenshengchen/New_lamp_control/rdl_ws/build && $(MAKE) -f book_tracker/CMakeFiles/book_detect.dir/build.make book_tracker/CMakeFiles/book_detect.dir/src/book_detect.cpp.o
+.PHONY : src/book_detect.cpp.o
+
+src/book_detect.i: src/book_detect.cpp.i
+
+.PHONY : src/book_detect.i
+
+# target to preprocess a source file
+src/book_detect.cpp.i:
+	cd /home/chenshengchen/New_lamp_control/rdl_ws/build && $(MAKE) -f book_tracker/CMakeFiles/book_detect.dir/build.make book_tracker/CMakeFiles/book_detect.dir/src/book_detect.cpp.i
+.PHONY : src/book_detect.cpp.i
+
+src/book_detect.s: src/book_detect.cpp.s
+
+.PHONY : src/book_detect.s
+
+# target to generate assembly for a file
+src/book_detect.cpp.s:
+	cd /home/chenshengchen/New_lamp_control/rdl_ws/build && $(MAKE) -f book_tracker/CMakeFiles/book_detect.dir/build.make book_tracker/CMakeFiles/book_detect.dir/src/book_detect.cpp.s
+.PHONY : src/book_detect.cpp.s
+
+src/camshiftdemo.o: src/camshiftdemo.cpp.o
+
+.PHONY : src/camshiftdemo.o
+
+# target to build an object file
+src/camshiftdemo.cpp.o:
+	cd /home/chenshengchen/New_lamp_control/rdl_ws/build && $(MAKE) -f book_tracker/CMakeFiles/camshiftdemo.dir/build.make book_tracker/CMakeFiles/camshiftdemo.dir/src/camshiftdemo.cpp.o
+.PHONY : src/camshiftdemo.cpp.o
+
+src/camshiftdemo.i: src/camshiftdemo.cpp.i
+
+.PHONY : src/camshiftdemo.i
+
+# target to preprocess a source file
+src/camshiftdemo.cpp.i:
+	cd /home/chenshengchen/New_lamp_control/rdl_ws/build && $(MAKE) -f book_tracker/CMakeFiles/camshiftdemo.dir/build.make book_tracker/CMakeFiles/camshiftdemo.dir/src/camshiftdemo.cpp.i
+.PHONY : src/camshiftdemo.cpp.i
+
+src/camshiftdemo.s: src/camshiftdemo.cpp.s
+
+.PHONY : src/camshiftdemo.s
+
+# target to generate assembly for a file
+src/camshiftdemo.cpp.s:
+	cd /home/chenshengchen/New_lamp_control/rdl_ws/build && $(MAKE) -f book_tracker/CMakeFiles/camshiftdemo.dir/build.make book_tracker/CMakeFiles/camshiftdemo.dir/src/camshiftdemo.cpp.s
+.PHONY : src/camshiftdemo.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -581,6 +665,8 @@ help:
 	@echo "... edit_cache"
 	@echo "... install/local"
 	@echo "... install/strip"
+	@echo "... camshiftdemo"
+	@echo "... book_detect"
 	@echo "... book_tracker_genpy"
 	@echo "... book_tracker_generate_messages_py"
 	@echo "... book_tracker_gennodejs"
@@ -610,6 +696,12 @@ help:
 	@echo "... sensor_msgs_generate_messages_nodejs"
 	@echo "... book_tracker_generate_messages_eus"
 	@echo "... book_tracker_generate_messages_lisp"
+	@echo "... src/book_detect.o"
+	@echo "... src/book_detect.i"
+	@echo "... src/book_detect.s"
+	@echo "... src/camshiftdemo.o"
+	@echo "... src/camshiftdemo.i"
+	@echo "... src/camshiftdemo.s"
 .PHONY : help
 
 

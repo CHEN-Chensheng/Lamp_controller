@@ -1,0 +1,8 @@
+prefix=/home/chenshengchen/New_lamp_control/rdl_ws/install
+
+Name: Gertie_urdf
+Description: Description of Gertie_urdf
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/chenshengchen/New_lamp_control/rdl_ws/install/lib 
+Requires: 

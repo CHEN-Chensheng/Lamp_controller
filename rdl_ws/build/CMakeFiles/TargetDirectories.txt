@@ -184,6 +184,8 @@
 /home/chenshengchen/New_lamp_control/rdl_ws/build/book_tracker/CMakeFiles/edit_cache.dir
 /home/chenshengchen/New_lamp_control/rdl_ws/build/book_tracker/CMakeFiles/install/local.dir
 /home/chenshengchen/New_lamp_control/rdl_ws/build/book_tracker/CMakeFiles/install/strip.dir
+/home/chenshengchen/New_lamp_control/rdl_ws/build/book_tracker/CMakeFiles/camshiftdemo.dir
+/home/chenshengchen/New_lamp_control/rdl_ws/build/book_tracker/CMakeFiles/book_detect.dir
 /home/chenshengchen/New_lamp_control/rdl_ws/build/book_tracker/CMakeFiles/book_tracker_genpy.dir
 /home/chenshengchen/New_lamp_control/rdl_ws/build/book_tracker/CMakeFiles/book_tracker_generate_messages_py.dir
 /home/chenshengchen/New_lamp_control/rdl_ws/build/book_tracker/CMakeFiles/book_tracker_gennodejs.dir
@@ -213,6 +215,13 @@
 /home/chenshengchen/New_lamp_control/rdl_ws/build/book_tracker/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir
 /home/chenshengchen/New_lamp_control/rdl_ws/build/book_tracker/CMakeFiles/book_tracker_generate_messages_eus.dir
 /home/chenshengchen/New_lamp_control/rdl_ws/build/book_tracker/CMakeFiles/book_tracker_generate_messages_lisp.dir
+/home/chenshengchen/New_lamp_control/rdl_ws/build/Gertie_urdf/CMakeFiles/list_install_components.dir
+/home/chenshengchen/New_lamp_control/rdl_ws/build/Gertie_urdf/CMakeFiles/install.dir
+/home/chenshengchen/New_lamp_control/rdl_ws/build/Gertie_urdf/CMakeFiles/rebuild_cache.dir
+/home/chenshengchen/New_lamp_control/rdl_ws/build/Gertie_urdf/CMakeFiles/install/strip.dir
+/home/chenshengchen/New_lamp_control/rdl_ws/build/Gertie_urdf/CMakeFiles/install/local.dir
+/home/chenshengchen/New_lamp_control/rdl_ws/build/Gertie_urdf/CMakeFiles/test.dir
+/home/chenshengchen/New_lamp_control/rdl_ws/build/Gertie_urdf/CMakeFiles/edit_cache.dir
 /home/chenshengchen/New_lamp_control/rdl_ws/build/rdl/CMakeFiles/listener.dir
 /home/chenshengchen/New_lamp_control/rdl_ws/build/rdl/CMakeFiles/lamp_control.dir
 /home/chenshengchen/New_lamp_control/rdl_ws/build/rdl/CMakeFiles/bag_write.dir
